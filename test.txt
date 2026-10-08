@@ -1,0 +1,6 @@
+CONF Pin 6 OUT;
+CONF Pin 4 OUT;
+Pin 6 ON;
+DREAD {Pin 5};
+WHEN(Pin 6 is ON)THEN{Pin 4 OFF;};
+LOOP{Pin 6 ON;};
