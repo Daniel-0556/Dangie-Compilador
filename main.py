@@ -5,12 +5,24 @@ from Visitor import Visitor
 
 def ejecutar():
     codigo_fuente = """
-        CONF Pin 6 OUT;
-        CONF Pin 4 OUT;
-        Pin 6 ON;
-        DREAD {Pin 5};
-        WHEN(Pin 6 is ON)THEN{Pin 4 OFF;};
-        LOOP{Pin 6 ON;};
+        NUMB pBoton;
+        pBoton = 2;
+        NUMB pLed;
+        pLed = 8;
+        
+        CONF Pin pLed OUT;
+        CONF Pin pBoton IN;
+        
+        LOOP {
+            NUMB estadoBoton;
+            estadoBoton = DREAD(pBoton);
+            WHEN (estadoBoton == HIGH) THEN {
+                PIN pLed ON;
+            };ELSE {
+                PIN pLed OFF;
+            };
+        };
+            
     """
     #1. FLUJO DE ENTRADA
     input_stream = InputStream(codigo_fuente)

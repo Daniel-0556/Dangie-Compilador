@@ -111,6 +111,18 @@ public class DangieBaseListener implements DangieListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterLecturaPin(DangieParser.LecturaPinContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitLecturaPin(DangieParser.LecturaPinContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterBucleWhen(DangieParser.BucleWhenContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -123,6 +135,18 @@ public class DangieBaseListener implements DangieListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterBloqueWhen(DangieParser.BloqueWhenContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitBloqueWhen(DangieParser.BloqueWhenContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterBucleLoop(DangieParser.BucleLoopContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -130,6 +154,18 @@ public class DangieBaseListener implements DangieListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitBucleLoop(DangieParser.BucleLoopContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterFuncionwait(DangieParser.FuncionwaitContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitFuncionwait(DangieParser.FuncionwaitContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

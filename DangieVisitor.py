@@ -49,13 +49,28 @@ class DangieVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by DangieParser#lecturaPin.
+    def visitLecturaPin(self, ctx:DangieParser.LecturaPinContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by DangieParser#bucleWhen.
     def visitBucleWhen(self, ctx:DangieParser.BucleWhenContext):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by DangieParser#bloqueWhen.
+    def visitBloqueWhen(self, ctx:DangieParser.BloqueWhenContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by DangieParser#bucleLoop.
     def visitBucleLoop(self, ctx:DangieParser.BucleLoopContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by DangieParser#funcionwait.
+    def visitFuncionwait(self, ctx:DangieParser.FuncionwaitContext):
         return self.visitChildren(ctx)
 
 

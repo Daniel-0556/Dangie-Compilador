@@ -1,3 +1,5 @@
+from asyncio import sleep
+
 from DangieParser import DangieParser
 from DangieVisitor import DangieVisitor
 
@@ -18,9 +20,25 @@ class Visitor(DangieVisitor):
     def _nombre_pin(self, ctx):
         return f"pin_{int(ctx.NUMB().getText())}"
 
+    def _resolver_numero_pin(self, ctx):
+        if ctx.ID():
+            nombre_variable = ctx.ID().getText()
+            numero_pin = self.variables.get(nombre_variable)
+            if not isinstance(numero_pin, int):
+                self.logErrores.append(
+                    f"Error: {nombre_variable} no contiene un número de pin válido."
+                )
+                return None
+            return numero_pin
+
+        return int(ctx.NUMB().getText())
+
     def _leer_valor(self, valor_ctx):
         if valor_ctx is None:
             return None
+
+        if valor_ctx.lecturaPin():
+            return self.visitLecturaPin(valor_ctx.lecturaPin())
 
         if valor_ctx.NUMB():
             return int(valor_ctx.NUMB().getText())
@@ -36,6 +54,32 @@ class Visitor(DangieVisitor):
             return self.variables.get(nombre, nombre)
 
         return valor_ctx.getText()
+
+    def _leer_pin_digital(self, ctx):
+        numero_pin = self._resolver_numero_pin(ctx)
+        if numero_pin is None:
+            return None
+
+        nombre_pin = f"pin_{numero_pin}"
+        if nombre_pin not in self.PINES_VALIDOS:
+            self.logErrores.append(
+                f"Error: {nombre_pin} no es válido. Solo se permite pin 0 a pin 13."
+            )
+            return None
+
+        if self.pin_modos.get(nombre_pin) != "IN":
+            self.logErrores.append(
+                f"Error: {nombre_pin} debe estar configurado como entrada para leerlo."
+            )
+            return None
+
+        estado = self.pin_estados.get(nombre_pin, "OFF")
+        valor = "HIGH" if estado in ("ON", "HIGH") else "LOW"
+        print(
+            f"Leyendo {ctx.TIPO_LECTURA().getText()} de {nombre_pin}: "
+            f"{valor} (simulado)"
+        )
+        return valor
 
     def _evaluar_expresion(self, ctx):
         if ctx is None:
@@ -82,8 +126,12 @@ class Visitor(DangieVisitor):
         return self.visitChildren(ctx)
 
     def visitConfPin(self, ctx: DangieParser.ConfPinContext):
-        nombre_pin = self._nombre_pin(ctx)
-        num = ctx.NUMB().getText()
+        numero_pin = self._resolver_numero_pin(ctx)
+        if numero_pin is None:
+            return None
+
+        nombre_pin = f"pin_{numero_pin}"
+        num = str(numero_pin)
         modo = ctx.MODO().getText()
 
         if nombre_pin not in self.PINES_VALIDOS:
@@ -105,8 +153,12 @@ class Visitor(DangieVisitor):
         return None
 
     def visitActuadorPin(self, ctx: DangieParser.ActuadorPinContext):
-        nombre_pin = self._nombre_pin(ctx)
-        num = ctx.NUMB().getText()
+        numero_pin = self._resolver_numero_pin(ctx)
+        if numero_pin is None:
+            return None
+
+        nombre_pin = f"pin_{numero_pin}"
+        num = str(numero_pin)
         estado = ctx.ESTADO().getText().upper()
 
         if nombre_pin not in self.PINES_VALIDOS:
@@ -134,6 +186,9 @@ class Visitor(DangieVisitor):
         print(f"Pin detectado {nombre_pin} {num} en lectura {tipo_lectura}")
         return None
 
+    def visitLecturaPin(self, ctx: DangieParser.LecturaPinContext):
+        return self._leer_pin_digital(ctx)
+
     def visitDeclaracionVar(self, ctx: DangieParser.DeclaracionVarContext):
         nombre_var = ctx.ID().getText()
         valor = self._leer_valor(ctx.valor()) if hasattr(ctx, "valor") and ctx.valor() is not None else None
@@ -151,13 +206,20 @@ class Visitor(DangieVisitor):
     def visitBucleWhen(self, ctx: DangieParser.BucleWhenContext):
         condicion = ctx.expresion().getText()
         print(f"Evaluando WHEN con condición {condicion}")
+        bloques = ctx.bloqueWhen()
 
         if self._evaluar_expresion(ctx.expresion()):
             print(f"La condición se cumple: {condicion}")
-            for ctx_instruccion in ctx.instruccion():
-                self.visit(ctx_instruccion)
+            instrucciones = bloques[0].instruccion()
+        elif len(bloques) > 1:
+            print(f"La condición NO se cumple: {condicion}")
+            instrucciones = bloques[1].instruccion()
         else:
             print(f"La condición NO se cumple: {condicion}")
+            instrucciones = []
+
+        for ctx_instruccion in instrucciones:
+            self.visit(ctx_instruccion)
 
         print("Saliendo del bucle WHEN")
         return None
@@ -169,4 +231,10 @@ class Visitor(DangieVisitor):
             self.visit(ctx_instruccion)
 
         print("Saliendo del bucle LOOP")
+        return None
+    
+    def visitFuncionwait(self, ctx: DangieParser.FuncionwaitContext):
+        tiempo_espera = int(ctx.NUMB().getText())
+        sleep(tiempo_espera)
+        print(f"Esperando {tiempo_espera} unidades de tiempo")
         return None

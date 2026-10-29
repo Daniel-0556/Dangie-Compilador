@@ -87,6 +87,16 @@ public interface DangieListener extends ParseTreeListener {
 	 */
 	void exitLecturaSensor(DangieParser.LecturaSensorContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link DangieParser#lecturaPin}.
+	 * @param ctx the parse tree
+	 */
+	void enterLecturaPin(DangieParser.LecturaPinContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link DangieParser#lecturaPin}.
+	 * @param ctx the parse tree
+	 */
+	void exitLecturaPin(DangieParser.LecturaPinContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link DangieParser#bucleWhen}.
 	 * @param ctx the parse tree
 	 */
@@ -97,6 +107,16 @@ public interface DangieListener extends ParseTreeListener {
 	 */
 	void exitBucleWhen(DangieParser.BucleWhenContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link DangieParser#bloqueWhen}.
+	 * @param ctx the parse tree
+	 */
+	void enterBloqueWhen(DangieParser.BloqueWhenContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link DangieParser#bloqueWhen}.
+	 * @param ctx the parse tree
+	 */
+	void exitBloqueWhen(DangieParser.BloqueWhenContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link DangieParser#bucleLoop}.
 	 * @param ctx the parse tree
 	 */
@@ -106,6 +126,16 @@ public interface DangieListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitBucleLoop(DangieParser.BucleLoopContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link DangieParser#funcionwait}.
+	 * @param ctx the parse tree
+	 */
+	void enterFuncionwait(DangieParser.FuncionwaitContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link DangieParser#funcionwait}.
+	 * @param ctx the parse tree
+	 */
+	void exitFuncionwait(DangieParser.FuncionwaitContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link DangieParser#expresion}.
 	 * @param ctx the parse tree

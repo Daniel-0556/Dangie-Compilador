@@ -80,6 +80,15 @@ class DangieListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by DangieParser#lecturaPin.
+    def enterLecturaPin(self, ctx:DangieParser.LecturaPinContext):
+        pass
+
+    # Exit a parse tree produced by DangieParser#lecturaPin.
+    def exitLecturaPin(self, ctx:DangieParser.LecturaPinContext):
+        pass
+
+
     # Enter a parse tree produced by DangieParser#bucleWhen.
     def enterBucleWhen(self, ctx:DangieParser.BucleWhenContext):
         pass
@@ -89,12 +98,30 @@ class DangieListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by DangieParser#bloqueWhen.
+    def enterBloqueWhen(self, ctx:DangieParser.BloqueWhenContext):
+        pass
+
+    # Exit a parse tree produced by DangieParser#bloqueWhen.
+    def exitBloqueWhen(self, ctx:DangieParser.BloqueWhenContext):
+        pass
+
+
     # Enter a parse tree produced by DangieParser#bucleLoop.
     def enterBucleLoop(self, ctx:DangieParser.BucleLoopContext):
         pass
 
     # Exit a parse tree produced by DangieParser#bucleLoop.
     def exitBucleLoop(self, ctx:DangieParser.BucleLoopContext):
+        pass
+
+
+    # Enter a parse tree produced by DangieParser#funcionwait.
+    def enterFuncionwait(self, ctx:DangieParser.FuncionwaitContext):
+        pass
+
+    # Exit a parse tree produced by DangieParser#funcionwait.
+    def exitFuncionwait(self, ctx:DangieParser.FuncionwaitContext):
         pass
 
 
